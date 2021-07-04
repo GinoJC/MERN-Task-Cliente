@@ -8,7 +8,6 @@ const NuevaCuenta = () => {
     password: '',
     confirmar: ''
   });
-  const [error, setError] = useState(false);
 
   const {nombre, email, password, confirmar} = usuario;
 
@@ -23,7 +22,6 @@ const NuevaCuenta = () => {
     e.preventDefault();
 
     if(nombre.trim() === 0 || email.trim() === 0 || password.trim() === 0 || confirmar.trim() === 0){
-      setError(true);
       return;
     }
   }

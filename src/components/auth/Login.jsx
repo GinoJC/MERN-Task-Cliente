@@ -6,7 +6,6 @@ const Login = () => {
     email: '',
     password: ''
   });
-  const [error, setError] = useState(false);
 
   const {email, password} = usuario;
 
@@ -21,7 +20,6 @@ const Login = () => {
     e.preventDefault();
 
     if(email.trim() === 0 || password.trim() === 0){
-      setError(true);
       return;
     }
   }

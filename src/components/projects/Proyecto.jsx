@@ -11,7 +11,7 @@ const Proyecto = ({proyecto}) => {
 
   const seleccionarProyecto = () => {
     proyectoActual(proyecto);
-    obtenerTareas(proyecto.id);
+    obtenerTareas(proyecto._id);
   }
 
   const {nombre} = proyecto;

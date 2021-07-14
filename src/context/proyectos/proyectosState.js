@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
-import {v4 as uuidv4} from 'uuid';
 import proyectoContext from './proyectoContext';
 import proyectoReducer from './proyectoReducer';
+import clienteAxios from '../../config/axios';
 import {
   FORMULARIO_PROYECTO,
   OBTENER_PROYECTOS,
@@ -12,11 +12,6 @@ import {
 } from '../../types';
 
 const ProyectoState = ({children}) => {
-  const proyectos = [
-    {id: 1, nombre: 'Tienda virtual'},
-    {id: 2, nombre: 'Intranet'},
-    {id: 3, nombre: 'Diseño de Sitio Web'}
-  ];
 
   const initialState = {
     formulario: false,
@@ -33,19 +28,28 @@ const ProyectoState = ({children}) => {
     })
   }
 
-  const obtenerProyectos = () => {
-    dispatch({
-      type: OBTENER_PROYECTOS,
-      payload: proyectos
-    })
+  const obtenerProyectos = async () => {
+    try {
+      const resultado = await clienteAxios.get('/api/proyectos');
+      dispatch({
+        type: OBTENER_PROYECTOS,
+        payload: resultado.data.proyectos
+      })
+    } catch (error) {
+      console.log('Error obtenerProyectos', error);
+    }
   }
 
-  const agregarProyecto = proyecto => {
-    proyecto.id = uuidv4();
-    dispatch({
-      type: AGREGAR_PROYECTO,
-      payload: proyecto
-    })
+  const agregarProyecto = async proyecto => {
+    try {
+      const resultado = await clienteAxios.post('/api/proyectos', proyecto);
+      dispatch({
+        type: AGREGAR_PROYECTO,
+        payload: resultado.data
+      })
+    } catch (error) {
+      console.log('Error agregarProyecto', error);
+    }
   }
 
   const mostrarError = () => {

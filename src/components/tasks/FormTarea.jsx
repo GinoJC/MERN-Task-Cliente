@@ -37,8 +37,7 @@ const FormTarea = () => {
       return;
     }
     if(!tareaseleccionada){
-      tarea.proyectoId = proyecto.id;
-      tarea.estado = false;
+      tarea.proyecto = proyecto._id;
       agregarTarea(tarea);
     }else{
       actualizarTarea(tarea);

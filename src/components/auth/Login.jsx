@@ -18,6 +18,7 @@ const Login = ({history}) => {
     if(mensaje) {
       mostrarAlerta(mensaje.msg, mensaje.categoria);
     }
+  // eslint-disable-next-line
   }, [mensaje, autenticado, history]);
 
   const [usuario, setUsuario] = useState({

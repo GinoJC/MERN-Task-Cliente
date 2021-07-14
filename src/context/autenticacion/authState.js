@@ -99,7 +99,7 @@ const AuthState = ({children}) => {
         autenticado: state.autenticado,
         usuario: state.usuario,
         mensaje: state.mensaje,
-        cargando: state. cargando,
+        cargando: state.cargando,
         registrarUsuario,
         usuarioAutenticado,
         iniciarSesion,

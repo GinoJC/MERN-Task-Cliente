@@ -1,18 +1,17 @@
 import React, {useContext} from 'react';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import Tarea from './Tarea';
-import proyectoContext from '../../context/proyectos/proyectoContext';
-import tareaContext from '../../context/tareas/tareaContext';
+import ProyectoContext from '../../context/proyectos/proyectoContext';
+import TareaContext from '../../context/tareas/tareaContext';
 
 const ListadoTareas = () => {
-  const proyectosContext = useContext(proyectoContext);
-  const {proyecto, eliminarProyecto} = proyectosContext;
+  const proyectoContext = useContext(ProyectoContext);
+  const {proyecto, eliminarProyecto} = proyectoContext;
 
-  const tareasContext = useContext(tareaContext);
-  const {tareasproyecto} = tareasContext;
+  const tareaContext = useContext(TareaContext);
+  const {tareasproyecto} = tareaContext;
 
   if(!proyecto) return <h2>Selecciona un proyecto</h2>;
-
 
   return (
     <>
@@ -24,7 +23,7 @@ const ListadoTareas = () => {
           <TransitionGroup>
             {tareasproyecto.map(tarea => 
               <CSSTransition
-                key={tarea.id}
+                key={tarea._id}
                 timeout={200}
                 classNames='tarea'
               >
@@ -37,7 +36,7 @@ const ListadoTareas = () => {
       <button
         type='button'
         className='btn btn-eliminar'
-        onClick={() => eliminarProyecto(proyecto.id)}
+        onClick={() => eliminarProyecto(proyecto._id)}
       >
         Eliminar Proyecto &times;
       </button>

@@ -1,20 +1,20 @@
 import React, {useContext} from 'react';
-import tareaContext from '../../context/tareas/tareaContext';
+import TareaContext from '../../context/tareas/tareaContext';
 
 const Tarea = ({tarea}) => {
-  const tareasContext = useContext(tareaContext);
-  const {obtenerTareas, eliminarTarea, cambiarEstadoTarea, guardarTareaActual} = tareasContext;
+  const tareaContext = useContext(TareaContext);
+  const {obtenerTareas, eliminarTarea, actualizarTarea, guardarTareaActual} = tareaContext;
 
-  const {id, nombre, estado, proyectoId} = tarea;
+  const {_id, nombre, estado, proyecto} = tarea;
 
   const tareaEliminar = () => {
-    eliminarTarea(id);
-    obtenerTareas(proyectoId);
+    eliminarTarea(_id, proyecto);
+    obtenerTareas(proyecto);
   }
 
   const cambiarEstado = tarea => {
     tarea.estado = !tarea.estado;
-    cambiarEstadoTarea(tarea);
+    actualizarTarea(tarea);
   }
 
   return (

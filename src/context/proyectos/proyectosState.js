@@ -8,7 +8,8 @@ import {
   AGREGAR_PROYECTO,
   VALIDAR_FORMULARIO,
   PROYECTO_ACTUAL,
-  ELIMINAR_PROYECTO
+  ELIMINAR_PROYECTO,
+  PROYECTO_ERROR
 } from '../../types';
 
 const ProyectoState = ({children}) => {
@@ -17,7 +18,8 @@ const ProyectoState = ({children}) => {
     formulario: false,
     proyectos: [],
     errorformulario: false,
-    proyecto: null
+    proyecto: null,
+    mensaje: null
   }
   
   const [state, dispatch] = useReducer(proyectoReducer, initialState);
@@ -37,6 +39,14 @@ const ProyectoState = ({children}) => {
       })
     } catch (error) {
       console.log('Error obtenerProyectos', error);
+      const alerta = {
+        msg: 'Hubo un error al obtener los proyectos',
+        categoria: 'alerta-error'
+      }
+      dispatch({
+        type: PROYECTO_ERROR,
+        payload: alerta
+      })
     }
   }
 
@@ -49,6 +59,14 @@ const ProyectoState = ({children}) => {
       })
     } catch (error) {
       console.log('Error agregarProyecto', error);
+      const alerta = {
+        msg: 'Hubo un error al agregar el proyecto',
+        categoria: 'alerta-error'
+      }
+      dispatch({
+        type: PROYECTO_ERROR,
+        payload: alerta
+      })
     }
   }
 
@@ -65,11 +83,24 @@ const ProyectoState = ({children}) => {
     })
   }
 
-  const eliminarProyecto = proyectoId => {
-    dispatch({
-      type: ELIMINAR_PROYECTO,
-      payload: proyectoId
-    })
+  const eliminarProyecto = async proyectoId => {
+    try {
+      await clienteAxios.delete(`/api/proyectos/${proyectoId}`);
+      dispatch({
+        type: ELIMINAR_PROYECTO,
+        payload: proyectoId
+      })
+    } catch (error) {
+      console.log('Error eliminarProyecto', error);
+      const alerta = {
+        msg: 'Hubo un error al eliminar el proyecto',
+        categoria: 'alerta-error'
+      }
+      dispatch({
+        type: PROYECTO_ERROR,
+        payload: alerta
+      })
+    }
   }
 
   return (
@@ -79,6 +110,7 @@ const ProyectoState = ({children}) => {
         proyectos: state.proyectos,
         errorformulario: state.errorformulario,
         proyecto: state.proyecto,
+        mensaje: state.mensaje,
         mostrarFormulario,
         obtenerProyectos,
         agregarProyecto,
